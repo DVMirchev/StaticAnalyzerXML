@@ -8,12 +8,12 @@
 #define new DEBUG_NEW
 #endif
 
+using namespace std;
 
 // The one and only application object
 
 CWinApp theApp;
 
-using namespace std;
 
 int main()
 {
