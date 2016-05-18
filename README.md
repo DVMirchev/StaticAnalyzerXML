@@ -21,7 +21,7 @@ You should have a file "analyzer_report.xml"
 
 #How to use the program?
 
-Download the program, open the solution, build & pray than run. The soulution is made with Visual Studio 2015 Update 2. If you are lucky and I've published a buildable version you will have a dialog application running. Appologies for the interace. 
+Download, open the solution, build & pray than run. The soulution is made with Visual Studio 2015 Update 2. If you are lucky and I've published a buildable version you will have a dialog application running. Appologies for the interace. 
 
 In the upper corner there is a "browse to folder" edit box - select the folder containing the .xml file and the source. Than check if the default file prefix is correct - it will scan for .xml files that start with that prefix that folder recursively. This is made if you have multiple projects and the .xml files are usually created where tha make file is.
 
