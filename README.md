@@ -1,13 +1,12 @@
 # StaticAnalyzerXML
 
-Viewer for VS C++ static analyzer .xml files
+Viewer for Microsoft Visual Studio C++ static analyzer .xml files
 
 MSVC compiler have the /analze option to run static analysis:
 
 https://msdn.microsoft.com/en-us/library/ms173498.aspx
 
 to save this report to a .xml file the option /analyze:log filename is provided. This program is a viewer for those .xml files. 
-
 # How to create the XML files?
 
 I'll use SQLite as example (sorry, nothing personal)
@@ -26,7 +25,7 @@ Download the program, open the solution, build & pray than run. If you are lucky
 
 In the upper corner there is a "browse to folder" edit box - select the folder containing the .xml file and the source. Than check if the default file prefix is correct - it will scan for .xml files that start with that prefix that folder recursively. This is made if you have multiple projects and the .xml files are usually created where tha make file is.
 
-# GO!
+# GO !
 
 If you continue to be lucky the .xml files will be found, parsed and the tree control will be populated with defects.
 
