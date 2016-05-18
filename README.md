@@ -35,7 +35,7 @@ Than you should be able to browse and inspect them. I hope the UI and button nam
 
 Yes! I have this feature.
 
-Launch Visual Studio, expand any defect and double click on the file name or the description.
+With Visual Studio running in expand any defect and double click on the file name or the description.
 
 If such file at this path exists (if you send the .xml to someone else it wont) it will be oppened in Microsoft Visual Studio and the warning in question will be selected. This works almost always (the function is called visual_studio_open_file if you see it you will know why)!
 
