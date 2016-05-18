@@ -47,6 +47,7 @@ local.properties
 *.user
 *.sln.docstates
 *.db
+*.opendb
 
 # Build results
 
