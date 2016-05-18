@@ -80,7 +80,8 @@ bool visual_studio_open_file(TCHAR const *filename, unsigned int line)
 /////////////////////////////////////////////////////////////////////////
 bool operator==(const SFA& lhs, const SFA& rhs)
 {
-	return lhs.strFileName == rhs.strFileName && lhs.strFilePath == rhs.strFilePath && lhs.strColumn == rhs.strColumn && lhs.strLine == rhs.strLine;// && lhs. == rhs. &&
+	return std::tie(lhs.strFileName, lhs.strFilePath, lhs.strColumn, lhs.strLine) ==
+         std::tie(rhs.strFileName, rhs.strFilePath, rhs.strColumn, rhs.strLine);
 }
 
 /////////////////////////////////////////////////////////////////////////
@@ -90,26 +91,8 @@ bool operator==(const SFA& lhs, const SFA& rhs)
 /////////////////////////////////////////////////////////////////////////
 bool operator<(const SFA& lhs, const SFA& rhs)
 {
-	if (lhs.strFileName < rhs.strFileName)
-		return true;
-
-	if (lhs.strFileName == rhs.strFileName)
-	{
-		if (lhs.strFilePath < rhs.strFilePath)
-			return true;
-
-		if (lhs.strFilePath == rhs.strFilePath)
-		{
-			if (lhs.strColumn < rhs.strColumn)
-				return true;
-
-			if (lhs.strColumn == rhs.strColumn)
-				if (lhs.strLine < rhs.strLine)
-					return true;
-		}
-	}
-
-	return false;
+  return std::tie(lhs.strFileName, lhs.strFilePath, lhs.strColumn, lhs.strLine) <
+         std::tie(rhs.strFileName, rhs.strFilePath, rhs.strColumn, rhs.strLine);
 }
 
 
@@ -120,11 +103,8 @@ bool operator<(const SFA& lhs, const SFA& rhs)
 /////////////////////////////////////////////////////////////////////////
 bool operator==(const Defect& lhs, const Defect& rhs)
 {
-	return	lhs.strDefectCode == rhs.strDefectCode	&&
-		lhs.strDescription == rhs.strDescription &&
-		lhs.strFunction == rhs.strFunction		&&
-		lhs.strDecorated == rhs.strDecorated		&&
-		lhs.sfa == rhs.sfa;
+  return std::tie(lhs.strDefectCode, lhs.strDescription, lhs.strFunction, lhs.strDecorated, lhs.sfa) ==
+         std::tie(rhs.strDefectCode, rhs.strDescription, rhs.strFunction, rhs.strDecorated, rhs.sfa);
 }
 
 /////////////////////////////////////////////////////////////////////////
@@ -134,34 +114,8 @@ bool operator==(const Defect& lhs, const Defect& rhs)
 /////////////////////////////////////////////////////////////////////////
 bool operator<(const Defect& lhs, const Defect& rhs)
 {
-	if (lhs.strDefectCode < rhs.strDefectCode)
-		return true;
-
-	if (lhs.strDefectCode == rhs.strDefectCode)
-	{
-		if (lhs.strDescription < rhs.strDescription)
-			return true;
-
-		if (lhs.strDescription == rhs.strDescription)
-		{
-			if (lhs.strFunction < rhs.strFunction)
-				return true;
-
-			if (lhs.strFunction == rhs.strFunction)
-			{
-				if (lhs.strDecorated < rhs.strDecorated)
-					return true;
-
-				if (lhs.strDecorated == rhs.strDecorated)
-				{
-					if (lhs.sfa < rhs.sfa)
-						return true;
-				}
-			}
-		}
-	}
-
-	return false;
+	return std::tie(lhs.strDefectCode, lhs.strDescription, lhs.strFunction, lhs.strDecorated, lhs.sfa) <
+         std::tie(rhs.strDefectCode, rhs.strDescription, rhs.strFunction, rhs.strDecorated, rhs.sfa);
 }
 
 /////////////////////////////////////////////////////////////////////////
@@ -169,42 +123,11 @@ bool operator<(const Defect& lhs, const Defect& rhs)
 //
 //
 /////////////////////////////////////////////////////////////////////////
-bool LessThankByFile(const Defect & lhs, const Defect & rhs)
+bool LessThanByFile(const Defect & lhs, const Defect & rhs)
 {
-	if ((lhs.sfa.strFilePath + lhs.sfa.strFileName) < (rhs.sfa.strFilePath + rhs.sfa.strFileName))
-		return true;
 
-	if ((lhs.sfa.strFilePath + lhs.sfa.strFileName) == (rhs.sfa.strFilePath + rhs.sfa.strFileName))
-	{
-		if (lhs.strDefectCode < rhs.strDefectCode)
-			return true;
-
-		if (lhs.strDefectCode == rhs.strDefectCode)
-		{
-			if (lhs.strDescription < rhs.strDescription)
-				return true;
-
-			if (lhs.strDescription == rhs.strDescription)
-			{
-				if (lhs.strFunction < rhs.strFunction)
-					return true;
-
-				if (lhs.strFunction == rhs.strFunction)
-				{
-					if (lhs.strDecorated < rhs.strDecorated)
-						return true;
-
-					if (lhs.strDecorated == rhs.strDecorated)
-					{
-						if (lhs.sfa < rhs.sfa)
-							return true;
-					}
-				}
-			}
-		}
-	}
-
-	return false;
+  return std::tie(lhs.sfa.strFilePath + lhs.sfa.strFileName, lhs.strDefectCode, lhs.strDescription, lhs.strFunction, lhs.strDecorated, lhs.sfa) <
+		     std::tie(rhs.sfa.strFilePath + rhs.sfa.strFileName, rhs.strDefectCode, rhs.strDescription, rhs.strFunction, rhs.strDecorated, rhs.sfa);
 }
 
 /////////////////////////////////////////////////////////////////////////
@@ -212,42 +135,10 @@ bool LessThankByFile(const Defect & lhs, const Defect & rhs)
 //
 //
 /////////////////////////////////////////////////////////////////////////
-bool LessThankBySubProjectDir(const Defect & lhs, const Defect & rhs)
+bool LessThanBySubProjectDir(const Defect & lhs, const Defect & rhs)
 {
-	if (lhs.strSubProjectDir < rhs.strSubProjectDir)
-		return true;
-
-	if (lhs.strSubProjectDir == rhs.strSubProjectDir)
-	{
-		if (lhs.strDefectCode < rhs.strDefectCode)
-			return true;
-
-		if (lhs.strDefectCode == rhs.strDefectCode)
-		{
-			if (lhs.strDescription < rhs.strDescription)
-				return true;
-
-			if (lhs.strDescription == rhs.strDescription)
-			{
-				if (lhs.strFunction < rhs.strFunction)
-					return true;
-
-				if (lhs.strFunction == rhs.strFunction)
-				{
-					if (lhs.strDecorated < rhs.strDecorated)
-						return true;
-
-					if (lhs.strDecorated == rhs.strDecorated)
-					{
-						if (lhs.sfa < rhs.sfa)
-							return true;
-					}
-				}
-			}
-		}
-	}
-
-	return false;
+  return std::tie(lhs.strSubProjectDir, lhs.strDefectCode, lhs.strDescription, lhs.strFunction, lhs.strDecorated, lhs.sfa) <
+         std::tie(rhs.strSubProjectDir, rhs.strDefectCode, rhs.strDescription, rhs.strFunction, rhs.strDecorated, rhs.sfa);
 }
 
 /////////////////////////////////////////////////////////////////////////
@@ -284,37 +175,6 @@ void RemoveReportNameFromPath(std::basic_string<TCHAR>& subject, const std::basi
 //
 //
 /////////////////////////////////////////////////////////////////////////
-template < typename  K, typename V >
-typename std::multimap<K, V>::const_iterator find_pair(const std::multimap<K, V>& map, const std::pair<K, V>& pair)
-{
-	auto range = map.equal_range(pair.first);
-	for (auto p = range.first; p != range.second; ++p)
-		if (p->second == pair.second)
-			return p;
-	return map.end();
-}
-
-/////////////////////////////////////////////////////////////////////////
-//
-//
-//
-/////////////////////////////////////////////////////////////////////////
-template<typename K, typename V>
-bool insert_if_not_present(std::multimap<K, V>& map, const std::pair<K, V>& pair)
-{
-	if (find_pair(map, pair) == map.end()) {
-		map.insert(pair);
-		return true;
-	}
-	return false;
-}
-
-
-/////////////////////////////////////////////////////////////////////////
-//
-//
-//
-/////////////////////////////////////////////////////////////////////////
 void DefectParser::Reset()
 {
 	m_setDefects.clear();
@@ -339,8 +199,6 @@ void DefectParser::Parse_XML_Document()
 	{
 		if (!m_bFirst)
 		{
-			//insert_if_not_present(m_Defects, std::pair<std::basic_string<TCHAR>, Defect>(m_currentDefect.strDefectCode, m_currentDefect));
-			//m_mapDefects.insert(std::pair<std::basic_string<TCHAR>, Defect>(m_currentDefect.strDefectCode, m_currentDefect));
 			++m_nCount;
 			m_setDefects.insert(m_currentDefect);
 		}
@@ -432,8 +290,6 @@ void DefectParser::Final()
 		++m_nCount;
 		m_setDefects.insert(m_currentDefect);
 	}
-
-	//insert_if_not_present(m_Defects, std::pair<std::basic_string<TCHAR>, Defect>(m_currentDefect.strDefectCode, m_currentDefect));
 }
 
 

@@ -152,10 +152,10 @@ void CStaticAnalyzerXMLDlg::PopulateTheTree()
 		std::sort(m_vectorDefects.begin(), m_vectorDefects.end());
 		break;
 	case 1:
-		std::sort(m_vectorDefects.begin(), m_vectorDefects.end(), LessThankByFile);
+		std::sort(m_vectorDefects.begin(), m_vectorDefects.end(), LessThanByFile);
 		break;
 	case 2:
-		std::sort(m_vectorDefects.begin(), m_vectorDefects.end(), LessThankBySubProjectDir);
+		std::sort(m_vectorDefects.begin(), m_vectorDefects.end(), LessThanBySubProjectDir);
 		break;
 	default:
 		ASSERT(FALSE);
