@@ -24,7 +24,7 @@ CStaticAnalyzerXMLDlg::CStaticAnalyzerXMLDlg(CWnd* pParent /*=NULL*/)
 	: CDialogEx(IDD_StaticAnalyzerXML_DIALOG, pParent)
 	  , m_strDefectsCount(_T(""))
 	  , m_strStatus(_T(""))
-	  , m_bOnlyProjectRoot(TRUE)
+	  , m_bOnlyProjectRoot(FALSE)
 	  , m_bCollapsePaths(TRUE)
 	  , m_nTopWarningsToHide(1)
 {
@@ -34,7 +34,7 @@ CStaticAnalyzerXMLDlg::CStaticAnalyzerXMLDlg(CWnd* pParent /*=NULL*/)
 void CStaticAnalyzerXMLDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
-	DDX_Control(pDX, IDC_GET_WALDOROOT, m_ProjectRoot);
+	DDX_Control(pDX, IDC_GET_PROJECTROOT, m_ProjectRoot);
 	DDX_Control(pDX, IDC_ANALYZER_XML_FILE_NAME, m_AnalyzerXMLFileNamePrefix);
 	DDX_Control(pDX, IDC_DEFECTS_TREE, m_WarningsTree);
 	DDX_Text(pDX, IDC_DEFECTS_COUNT, m_strDefectsCount);
@@ -74,15 +74,13 @@ BOOL CStaticAnalyzerXMLDlg::OnInitDialog()
 
 	// Folder browse edit
 	CString strProjectRoot;
-	if (!strProjectRoot.GetEnvironmentVariable(_T("WALDOROOT")))
-	{
-		TCHAR currentDir[MAX_PATH];
-		GetCurrentDirectory(MAX_PATH, &currentDir[0]);
-		strProjectRoot = &currentDir[0];
-	}
+
+	TCHAR currentDir[MAX_PATH];
+	GetCurrentDirectory(MAX_PATH, &currentDir[0]);
+	strProjectRoot = &currentDir[0];
 
 	m_ProjectRoot.SetWindowText(strProjectRoot);
-	m_ProjectRoot.EnableFolderBrowseButton(_T("Select WALDOROOT"));
+	m_ProjectRoot.EnableFolderBrowseButton(_T("Select Project Root"));
 
 	// XML File name prefix Edit
 	m_AnalyzerXMLFileNamePrefix.SetWindowText(_T("analyzer_report"));
