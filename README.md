@@ -17,7 +17,7 @@ Download the source files and run MSVC command prompt. Compile:
 
 cl sqlite3.c /analyze /analyze:log analyzer_report.xml /analyze:only
 
-You should have a file "analyzer_report.xml"
+You should have a file "analyzer_report.xml". I added this .xml (made with MSVS 2015 Update 2 compiler) to the repository so you dont have to compile SQLlite to try the viewer.
 
 #How to use the program?
 
